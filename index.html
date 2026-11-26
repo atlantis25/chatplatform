@@ -171,6 +171,21 @@
   .sheet-title{font-size:13px;color:var(--accent);font-weight:700}
   .sheet-tools{display:flex;flex-wrap:wrap;gap:6px;padding:10px 12px;border-bottom:1px solid var(--line);background:var(--card)}
   .sheet-tools button{font-size:12px;padding:5px 10px;border-radius:10px}
+  .conv-drawer{position:fixed;top:0;left:0;bottom:0;z-index:26;width:min(90vw,360px);background:var(--bg);box-shadow:6px 0 24px rgba(150,110,90,.18);transform:translateX(-102%);transition:transform .24s ease;display:flex;flex-direction:column}
+  .conv-drawer.open{transform:translateX(0)}
+  .conv-drawer-head{display:flex;align-items:center;justify-content:space-between;padding:7px 12px;border-bottom:1px solid var(--line);background:var(--card);font-size:13px;font-weight:700;color:var(--accent)}
+  #convDrawerBody{flex:1;display:flex;flex-direction:column;overflow:hidden}
+  .conv-drawer nav#convList{width:100%;border:none;flex:1}
+  .conv-drawer-foot{display:flex;align-items:center;justify-content:center;gap:6px;padding:10px 12px;border-top:1px solid var(--line);background:var(--card);font-size:13px;border-radius:0;width:100%}
+  .acc-group{border-bottom:1px solid var(--line)}
+  .acc-head{display:flex;align-items:center;justify-content:space-between;width:100%;padding:10px 2px;background:none;border:none;font-size:13px;font-weight:700;color:var(--accent);border-radius:0;cursor:pointer}
+  .acc-head:hover{background:var(--accent-soft)}
+  .acc-head .acc-chev{font-style:normal;font-size:12px;color:var(--sub);transition:transform .15s}
+  .acc-head.open .acc-chev{transform:rotate(90deg)}
+  .acc-body{display:none;padding:0 2px 10px}
+  .acc-body.open{display:block}
+  .sheet.appmode{width:min(96vw,520px)}
+  .sheet.appmode .sheet-body aside#panel{width:100%;border:none}
   .sheet-body{flex:1;display:flex;align-items:stretch;overflow:hidden}
   .sheet-body nav#convList{width:42%;border-right:1px solid var(--line)}
   .sheet-body aside#panel{width:58%;border-right:none}
@@ -201,6 +216,18 @@
 
 <div class="wrap">
   <div class="mask" id="mask"></div>
+
+  <div id="convDrawer" class="conv-drawer">
+    <div class="conv-drawer-head">
+      <span>对话</span>
+      <div style="display:flex;gap:4px">
+        <button id="convDrawerSettings" class="icon-btn" title="设置与工具">⚙</button>
+        <button id="convDrawerClose" class="icon-btn" title="收起">×</button>
+      </div>
+    </div>
+    <div id="convDrawerBody"></div>
+    <button id="convDrawerFoot" class="conv-drawer-foot">⚙ 设置与工具</button>
+  </div>
 
   <div id="sheet" class="sheet">
     <div class="sheet-head">
@@ -1926,21 +1953,84 @@ function setSheet(open, remember){
     try{ localStorage.setItem(LS_SHEET, open ? '1' : '0'); }catch(e){}
   }
 }
-function closeDrawers(){ setSheet(false, true); }
+function closeDrawers(){ setSheet(false, true); if(typeof closeConvDrawer === 'function') closeConvDrawer(); }
 function openSheet(){ setSheet(true, true); }
 $('panelBtn').onclick = ()=>{ setSheet(!$('sheet').classList.contains('open'), true); };
 $('sheetClose').onclick = ()=> setSheet(false, true);
-$('mask').onclick = ()=> setSheet(false, true);
+$('mask').onclick = ()=>{ setSheet(false, true); if(typeof closeConvDrawer === 'function') closeConvDrawer(); };
 // 方案 B：输入框获得焦点（键盘弹起）自动收起设置面板（不覆盖记忆状态）
-$('input').addEventListener('focus', ()=> setSheet(false, false));
+$('input').addEventListener('focus', ()=>{ setSheet(false, false); if(typeof closeConvDrawer === 'function') closeConvDrawer(); });
 
 // APK 内打开时：隐藏齿轮，点头像即开设置
 const IS_APP = (typeof window.dsShell !== 'undefined') || /;\s*wv\)/.test(navigator.userAgent);
+function openConvDrawer(){ $('convDrawer').classList.add('open'); $('mask').classList.add('show'); }
+function closeConvDrawer(){ const d = $('convDrawer'); if(d) d.classList.remove('open'); }
 if(IS_APP){
+  // App：头像 = 对话列表；设置收进分类折叠面板
   $('panelBtn').style.display = 'none';
-  $('brandAvatar').onclick = e => { e.stopPropagation(); setSheet(true, true); };
+  $('brandAvatar').onclick = e => { e.stopPropagation(); openConvDrawer(); };
+  $('convDrawerBody').appendChild($('convList'));
+  $('sheet').classList.add('appmode');
+  const tools = document.querySelector('.sheet-tools');
+  if(tools) $('panel').insertBefore(tools, $('panel').firstChild);
+  buildAccordion();
+  $('convDrawerSettings').onclick = ()=>{ closeConvDrawer(); $('mask').classList.remove('show'); setSheet(true, true); };
+  $('convDrawerFoot').onclick = ()=>{ closeConvDrawer(); $('mask').classList.remove('show'); setSheet(true, true); };
+  $('convDrawerClose').onclick = ()=>{ closeConvDrawer(); $('mask').classList.remove('show'); };
 }else{
   $('brandAvatar').onclick = null;
+  $('convDrawerFoot').style.display = 'none';
+  $('convDrawerSettings').style.display = 'none';
+}
+// 折叠分组：按小标题把设置面板切块，默认只展开第一组
+function buildAccordion(){
+  const panel = $('panel');
+  const kids = Array.from(panel.children);
+  let accState = {};
+  try{ accState = JSON.parse(localStorage.getItem('ds_acc_state') || '{}'); }catch(e){}
+  let curBody = null, titleGroups = 0;
+  function makeGroup(title, open){
+    const sec = document.createElement('section');
+    sec.className = 'acc-group';
+    const head = document.createElement('div');
+    head.className = 'acc-head' + (open ? ' open' : '');
+    head.tabIndex = 0;
+    head.innerHTML = `<span>${escapeHtml(title)}</span><i class="acc-chev">›</i>`;
+    const body = document.createElement('div');
+    body.className = 'acc-body' + (open ? ' open' : '');
+    head.onclick = ()=>{
+      const o = body.classList.toggle('open');
+      head.classList.toggle('open', o);
+      accState[title] = o;
+      try{ localStorage.setItem('ds_acc_state', JSON.stringify(accState)); }catch(e){}
+    };
+    sec.appendChild(head); sec.appendChild(body);
+    curBody = body;
+    return sec;
+  }
+  kids.forEach(el=>{
+    if(el.tagName === 'H2'){
+      const pure = Array.from(el.childNodes).filter(n=>n.nodeType === 3).map(n=>n.textContent).join('');
+      const title = pure.replace(/\s+/g,' ').trim() || el.textContent.trim();
+      const isFirstTitle = titleGroups === 0;
+      const open = accState[title] !== undefined ? !!accState[title] : isFirstTitle;
+      const sec = makeGroup(title, open);
+      // h2 里自带的按钮（如「用默认」）搬到分组标题里，别跟着 h2 一起删掉
+      Array.from(el.querySelectorAll('button')).forEach(b=>{
+        b.addEventListener('click', ev=> ev.stopPropagation());
+        sec.querySelector('.acc-head').insertBefore(b, sec.querySelector('.acc-chev'));
+      });
+      panel.insertBefore(sec, el);
+      el.remove();
+      titleGroups++;
+    }else{
+      if(!curBody){
+        const sec = makeGroup('工具箱', accState['工具箱'] === true);
+        panel.insertBefore(sec, el);
+      }
+      curBody.appendChild(el);
+    }
+  });
 }
 $('renameBtn').onclick = startRename;
 $('chatTitle').onclick = startRename;
