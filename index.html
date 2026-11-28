@@ -11,7 +11,37 @@
     --warn:#b45309; --radius:16px; --shadow:0 4px 16px rgba(214,140,110,.12);
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);height:100vh;display:flex;flex-direction:column}
+  body{font-family:"PingFang SC","HarmonyOS Sans SC","MiSans","Microsoft YaHei UI","Microsoft YaHei","Noto Sans SC","Source Han Sans SC","Hiragino Sans GB","Segoe UI",-apple-system,BlinkMacSystemFont,system-ui,Arial,sans-serif;font-synthesis:none;background:var(--bg);color:var(--text);height:100vh;display:flex;flex-direction:column}
+  /* 桌面/网页版：所有字号 +2 号（App 内不生效） */
+  body.web .msg{font-size:16px}
+  body.web header h1{font-size:15px}
+  body.web button{font-size:14px}
+  body.web .conv-title{font-size:14px}
+  body.web .conv-meta{font-size:12px}
+  body.web .conv-foot button{font-size:13px}
+  body.web aside h2{font-size:14px}
+  body.web label{font-size:13px}
+  body.web input,body.web textarea,body.web select{font-size:14px}
+  body.web .note{font-size:12px}
+  body.web .usage{font-size:12px}
+  body.web .think{font-size:13px}
+  body.web .msg-actions button{font-size:12px}
+  body.web .user-avatar{font-size:14px}
+  body.web .snap-item{font-size:13px}
+  body.web .snap-item .snap-time{font-size:12px}
+  body.web .vers-bar{font-size:12px}
+  body.web .modal .hint{font-size:12px}
+  body.web .modal h3{font-size:16px}
+  body.web .body.md h1{font-size:19px}
+  body.web .body.md h2{font-size:18px}
+  body.web .body.md h3,body.web .body.md h4{font-size:17px}
+  body.web .body.md table{font-size:13.5px}
+  body.web .body.md pre{font-size:13.5px}
+  body.web .body.md code{font-size:13.5px}
+  body.web .body.md pre .md-lang{font-size:11px}
+  body.web .md-copy{font-size:12px}
+  body.web .think-warn{font-size:12px}
+  body.web .stats{font-size:12px}
   header{display:flex;align-items:center;gap:8px;padding:5px 10px;background:var(--card);border-bottom:1px solid var(--line);flex-wrap:nowrap;box-shadow:none}
   header .brand{display:flex;align-items:center;gap:7px;min-width:0}
   header .brand .avatar{width:28px;height:28px;flex-shrink:0;border-radius:50%;overflow:hidden;cursor:pointer}
@@ -31,10 +61,13 @@
   .conv-item{position:relative;border:1px solid var(--line);border-radius:14px;padding:10px 11px;cursor:pointer;background:#fff;transition:all .15s}
   .conv-item:hover{border-color:var(--accent)}
   .conv-item.active{border-color:var(--accent);background:var(--accent-soft)}
-  .conv-title{font-size:13px;line-height:1.4;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;padding-right:18px}
+  .conv-title{font-size:13px;line-height:1.4;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;padding-right:68px}
   .conv-meta{font-size:11px;color:var(--sub);margin-top:3px}
   .conv-del{position:absolute;top:8px;right:7px;border:none;background:none;color:var(--sub);font-size:15px;padding:2px 6px;border-radius:8px;line-height:1}
   .conv-del:hover{color:#dc2626;background:#fef2f2}
+  .conv-exp{position:absolute;top:7px;right:44px;border:none;background:none;color:var(--sub);padding:4px 6px;border-radius:8px;line-height:0}
+  .conv-exp svg{width:14px;height:14px;display:block}
+  .conv-exp:hover{color:var(--accent);background:var(--accent-soft)}
   .conv-ren{position:absolute;top:8px;right:26px;border:none;background:none;color:var(--sub);font-size:13px;padding:2px 5px;border-radius:8px;line-height:1}
   .conv-ren:hover{color:var(--accent);background:var(--accent-soft)}
   .conv-rename-input{width:100%;font-size:13px;font-family:inherit;border:1px solid var(--accent);border-radius:8px;padding:3px 6px;background:#fff;color:var(--text)}
@@ -47,7 +80,7 @@
   aside h2{font-size:13px;color:var(--accent);margin:14px 0 8px;font-weight:700}
   aside h2:first-child{margin-top:0}
   label{display:block;font-size:12px;color:var(--sub);margin:8px 0 4px}
-  input,textarea,select{width:100%;border:1px solid var(--line);border-radius:12px;padding:9px;font-size:13px;background:#fff;color:var(--text)}
+  input,textarea,select{width:100%;border:1px solid var(--line);border-radius:12px;padding:9px;font-size:13px;background:#fff;color:var(--text);font-family:inherit}
   input:focus,textarea:focus{outline:none;border-color:var(--accent)}
   textarea{resize:vertical;line-height:1.5}
   .check-row{display:flex;align-items:center;gap:8px;margin:8px 0}
@@ -171,6 +204,19 @@
   .sheet-title{font-size:13px;color:var(--accent);font-weight:700}
   .sheet-tools{display:flex;flex-wrap:wrap;gap:6px;padding:10px 12px;border-bottom:1px solid var(--line);background:var(--card)}
   .sheet-tools button{font-size:12px;padding:5px 10px;border-radius:10px}
+  .nav-pane{position:fixed;top:0;right:0;bottom:0;z-index:26;width:min(86vw,340px);background:var(--bg);box-shadow:-6px 0 24px rgba(150,110,90,.18);transform:translateX(102%);transition:transform .24s ease;display:flex;flex-direction:column}
+  .nav-pane.open{transform:translateX(0)}
+  .nav-head{display:flex;align-items:center;justify-content:space-between;padding:7px 12px;border-bottom:1px solid var(--line);background:var(--card);font-size:13px;font-weight:700;color:var(--accent)}
+  #navList{flex:1;overflow-y:auto;padding:8px 10px;display:flex;flex-direction:column;gap:4px}
+  .nav-item{display:flex;gap:8px;align-items:flex-start;padding:8px 9px;border-radius:12px;font-size:12px;line-height:1.5;cursor:pointer;border:1px solid transparent;background:#fff}
+  .nav-item:hover{background:var(--accent-soft);border-color:var(--line)}
+  .nav-item.active{border-color:var(--accent);background:var(--accent-soft)}
+  .nav-idx{flex-shrink:0;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:var(--accent);color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center;font-weight:600}
+  .nav-text{color:var(--text);word-break:break-word;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical}
+  .nav-foot{display:flex;gap:6px;padding:8px 10px;border-top:1px solid var(--line);background:var(--card)}
+  .nav-foot button{flex:1;font-size:12px;padding:6px 8px;border-radius:10px}
+  body.web .nav-item{font-size:13.5px}
+  body.web .nav-foot button{font-size:13px}
   .conv-drawer{position:fixed;top:0;left:0;bottom:0;z-index:26;width:min(90vw,360px);background:var(--bg);box-shadow:6px 0 24px rgba(150,110,90,.18);transform:translateX(-102%);transition:transform .24s ease;display:flex;flex-direction:column}
   .conv-drawer.open{transform:translateX(0)}
   .conv-drawer-head{display:flex;align-items:center;justify-content:space-between;padding:7px 12px;border-bottom:1px solid var(--line);background:var(--card);font-size:13px;font-weight:700;color:var(--accent)}
@@ -212,10 +258,23 @@
   </div>
   <button id="renameBtn" class="icon-btn" title="重命名当前对话">✎</button>
   <div class="spacer"></div>
+  <button id="navBtn" class="icon-btn" title="对话导航（跳到某条提问）">☰</button>
 </header>
 
 <div class="wrap">
   <div class="mask" id="mask"></div>
+
+  <div id="navPane" class="nav-pane">
+    <div class="nav-head">
+      <span>对话导航</span>
+      <button id="navClose" class="icon-btn" title="收起">×</button>
+    </div>
+    <div id="navList"></div>
+    <div class="nav-foot">
+      <button id="navTop">↑ 回到顶部</button>
+      <button id="navBottom">↓ 到最新</button>
+    </div>
+  </div>
 
   <div id="convDrawer" class="conv-drawer">
     <div class="conv-drawer-head">
@@ -248,6 +307,7 @@
     <button class="new-chat" id="newChatBtn">＋ 新建对话</button>
     <div id="convItems"></div>
     <div class="conv-foot">
+      <button id="expCurBtn" title="只导出当前这个对话">导出本对话</button>
       <button id="backupBtn">备份</button>
       <button id="restoreBtn">恢复</button>
     </div>
@@ -351,19 +411,49 @@
   <div class="modal">
     <h3>数据备份 / 恢复</h3>
     <p class="hint">
-      备份包含<b>全部会话、消息、用量连同配置（模型、降价、系统提示）</b>，但不含 API Key（避免文件外泄）。在手机和电脑之间用这个 .json 文件搬运即可。<br>
-      手机端：先把本页放到能联网打开的地方（发文件用手机浏览器打开，或传静态托管拿链接），再「恢复」这个备份。
+      备份包含<b>全部会话、消息、用量连同配置（模型、价格、系统提示）</b>，但不含 API Key（避免文件外泄）。<br>
+      <b>只搬一个对话</b>：在会话列表点行尾的 <b>⤓</b> 单独导出，再在这里「从文件导入（追加）」即可。<br>
+      <b>碰到同名对话</b>会先问你要「覆盖同名」还是「保留两份」，不会悄悄覆盖。
     </p>
     <div class="doc-meta" id="backupStat"></div>
     <div class="btns">
       <button id="backupCancel">关闭</button>
       <button id="backupCopy">复制 JSON</button>
       <button class="primary" id="backupDownload">下载 .json</button>
-      <button id="restorePick">从文件恢复</button>
+      <button id="restorePick">从文件导入（追加）</button>
     </div>
   </div>
 </div>
 <input type="file" id="restoreFile" accept=".json,application/json" hidden>
+
+<!-- 导入时同名对话的处理选择 -->
+<div class="modal-mask" id="collideModal">
+  <div class="modal">
+    <h3>发现同名对话</h3>
+    <p class="hint" id="collideText"></p>
+    <div class="btns">
+      <button id="collideCancel">取消导入</button>
+      <button id="collideNew">保留两份</button>
+      <button class="primary" id="collideOver">覆盖同名</button>
+    </div>
+  </div>
+</div>
+
+<!-- 导出格式选择 -->
+<div class="modal-mask" id="exportModal">
+  <div class="modal">
+    <h3>导出这个对话</h3>
+    <p class="hint">
+      <b>Markdown（.md）</b>：保留标题、思考过程与每轮的 token 用量，适合存档。<br>
+      <b>纯对话（.txt）</b>：只留问题和回复的正文，不要思考链、不要用量统计，适合贴到别处或打印。
+    </p>
+    <div class="btns">
+      <button id="exportCancel">取消</button>
+      <button id="exportTxtBtn">纯对话 .txt</button>
+      <button class="primary" id="exportMdBtn">Markdown .md</button>
+    </div>
+  </div>
+</div>
 
 <!-- 分支回溯弹窗 -->
 <div class="modal-mask" id="snapModal">
@@ -564,8 +654,13 @@ function renderConvList(){
     del.title = '删除对话';
     del.textContent = '×';
     del.onclick = e => { e.stopPropagation(); deleteConv(id); };
+    const exp = document.createElement('button');
+    exp.className = 'conv-exp';
+    exp.title = '导出这个对话（.json，可再导入）';
+    exp.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v12"/><path d="M7 11l5 5 5-5"/><path d="M4 21h16"/></svg>';
+    exp.onclick = e => { e.stopPropagation(); exportConv(id); };
     title.ondblclick = e => { e.stopPropagation(); renameConv(id); };
-    item.appendChild(title); item.appendChild(meta); item.appendChild(ren); item.appendChild(del);
+    item.appendChild(title); item.appendChild(meta); item.appendChild(exp); item.appendChild(ren); item.appendChild(del);
     item.dataset.id = id;
     item.onclick = () => switchConv(id);
     box.appendChild(item);
@@ -977,6 +1072,7 @@ function buildThinkBlock(reasoning){
 function renderMsg(m, i){
   const div = document.createElement('div');
   div.className = 'msg ' + (m.role === 'user' ? 'user' : 'assistant');
+  div.dataset.mi = String(i);
 
   if(m.role === 'assistant'){
     const av = document.createElement('div');
@@ -1236,22 +1332,41 @@ function closeBackup(){ $('backupModal').classList.remove('show'); }
 
 function backupDownload(){
   const stamp = new Date().toISOString().slice(0,10);
-  const blob = new Blob([JSON.stringify(backupPayload(), null, 1)], { type:'application/json' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = `ds_chat_backup_${stamp}.json`;
-  a.click();
-  URL.revokeObjectURL(a.href);
+  const name = `ds_chat_backup_${stamp}.json`;
+  const text = JSON.stringify(backupPayload(), null, 1);
+  if(!appSaveText(name, text, 'application/json')) alert('导出失败，请改用「复制 JSON」。');
 }
 
-async function backupCopy(){
+function backupCopy(){
   const text = JSON.stringify(backupPayload());
-  try{
-    await navigator.clipboard.writeText(text);
-    alert('已复制到剪贴板，可以直接粘到备忘录 / 发给自己的聊天窗口。');
-  }catch(e){
-    alert('这个浏览器不允许直接写剪贴板，请改用「下载 .json」。');
+  appCopyText(text,
+    ()=> alert('已复制到剪贴板，可以直接粘到备忘录 / 发给自己的聊天窗口。'),
+    ()=> alert('剪贴板被系统拦截了，请改用「下载 .json」。'));
+}
+
+function exportConv(id){
+  const c = state.conversations[id];
+  if(!c){ return; }
+  if(!c.messages || !c.messages.length){
+    if(!confirm('这个对话还没有消息，仍然导出？')) return;
   }
+  const payload = {
+    v: 3, kind: 'conv', exportedAt: new Date().toISOString(),
+    conversation: {
+      title: c.title || '新对话',
+      renamed: !!c.renamed,
+      messages: c.messages || [],
+      snapshots: c.snapshots || [],
+      updatedAt: c.updatedAt || Date.now()
+    }
+  };
+  const safe = (c.title || '对话').replace(/[\\/:*?"<>|]/g, '_').slice(0, 20);
+  const name = `${safe}_${new Date().toISOString().slice(0,10)}.json`;
+  if(!appSaveText(name, JSON.stringify(payload, null, 1), 'application/json')) alert('导出失败，请改用整库备份。');
+}
+
+function newConvId(){
+  return 'c' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
 }
 
 async function doRestore(file){
@@ -1263,49 +1378,135 @@ async function doRestore(file){
     alert('读取失败：不是有效的 JSON 备份文件');
     return;
   }
-  const convs = payload && payload.conversations ? payload.conversations : payload;
+
+  // 两种输入：单个对话（kind:'conv'）或整库备份（conversations: {...}）
+  let convs = null, single = false;
+  if(payload && payload.kind === 'conv' && payload.conversation){
+    convs = { __one: payload.conversation };
+    single = true;
+  }else if(payload && payload.conversations && typeof payload.conversations === 'object'){
+    convs = payload.conversations;
+  }else if(payload && !Array.isArray(payload) && typeof payload === 'object' && payload.messages){
+    convs = { __one: payload };
+    single = true;
+  }
   if(!convs || typeof convs !== 'object' || Array.isArray(convs)){
-    alert('备份格式不对：缺少 conversations 字段');
+    alert('格式不对：既不是单个对话导出，也不是整库备份');
     return;
   }
-  const ids = Object.keys(convs);
-  if(!ids.length){ alert('备份里没有会话'); return; }
-  for(const id of ids){
-    const c = convs[id];
-    if(!c || !Array.isArray(c.messages)) convs[id] = { title:'新对话', messages:[], updatedAt:Date.now() };
-  }
-  if(!confirm(`备份里有 ${ids.length} 个会话，恢复会覆盖本机现有全部会话（不可撤销），继续？`)) return;
 
-  if(payload && payload.cfg){
-    const cur = JSON.parse(localStorage.getItem(LS.cfg) || '{}');
-    const merged = Object.assign({}, payload.cfg, { apiKey: cur.apiKey || '' });
-    localStorage.setItem(LS.cfg, JSON.stringify(merged));
-    loadCfg();
+  const incoming = [];
+  for(const id of Object.keys(convs)){
+    const c = convs[id];
+    if(!c || !Array.isArray(c.messages)) continue;
+    incoming.push({
+      title: (c.title || '新对话').toString().slice(0,40),
+      renamed: !!c.renamed,
+      messages: c.messages,
+      snapshots: Array.isArray(c.snapshots) ? c.snapshots.slice(0, 8) : [],
+      updatedAt: c.updatedAt || Date.now()
+    });
   }
-  if(payload && Array.isArray(payload.profiles) && payload.profiles.length){
+  if(!incoming.length){ alert('这个文件里没有可导入的会话'); return; }
+
+  const have = Object.keys(state.conversations).length;
+  const existingTitles = Object.keys(state.conversations).map(k => state.conversations[k].title || '新对话');
+  const collisions = incoming.filter(c => existingTitles.includes(c.title));
+
+  // 配置与接口档案只在整库备份时询问，且不动本机 API Key
+  if(!single && payload && payload.cfg){
+    if(confirm('要不要同时应用备份里的配置（接口地址 / 模型 / 价格 / 系统提示）？\nAPI Key 仍保留本机的不变。')){
+      const cur = JSON.parse(localStorage.getItem(LS.cfg) || '{}');
+      const merged = Object.assign({}, payload.cfg, { apiKey: cur.apiKey || '' });
+      localStorage.setItem(LS.cfg, JSON.stringify(merged));
+      loadCfg();
+    }
+  }
+  if(!single && payload && Array.isArray(payload.profiles) && payload.profiles.length){
     try{
       const cur = loadProfiles();
-      const merged = payload.profiles.map(p=>{
+      payload.profiles.forEach(p=>{
         const old = cur.find(x=>x.id===p.id || x.baseUrl===p.baseUrl);
-        return { id:p.id||('p'+Date.now().toString(36)), name:p.name, baseUrl:p.baseUrl,
-                 updatedAt:Date.now(), fields:Object.assign({}, p.fields||{}, { apiKey:(old&&old.fields&&old.fields.apiKey)||'' }) };
+        if(old) return; // 已有同源档案就跳过，不覆盖
+        cur.push({ id:p.id || ('p'+Date.now().toString(36)), name:p.name || hostName(p.baseUrl||''),
+                   baseUrl:p.baseUrl || '', updatedAt:Date.now(),
+                   fields:Object.assign({}, p.fields || {}, { apiKey:'' }) });
       });
-      localStorage.setItem(LS_PROFILES, JSON.stringify(merged));
+      localStorage.setItem(LS_PROFILES, JSON.stringify(cur));
       renderProfiles();
     }catch(e){}
   }
-  state = { conversations:convs, currentId:null };
-  // 恢复后停在备份里最后活跃的会话，避免看起来"没恢复成功"
-  const prefer = (payload && payload.currentId && convs[payload.currentId]) ? payload.currentId
-    : ids.slice().sort((a,b)=>(convs[b].updatedAt||0)-(convs[a].updatedAt||0))[0];
-  state.currentId = prefer || ids[0];
+
+  window.__pendingImport = { incoming, single };
+
+  if(collisions.length){
+    showCollideModal(collisions);
+    return;
+  }
+  const tip = single
+    ? `把这个对话「${incoming[0].title}」加入本机？现有 ${have} 个会话不受影响。`
+    : `文件里有 ${incoming.length} 个会话，将全部加入本机（现有 ${have} 个保留不动）。继续？`;
+  if(!confirm(tip)){ window.__pendingImport = null; return; }
+  applyImport('new');
+}
+
+// 有同名对话时让用户自己选：覆盖同名 / 保留两份
+function showCollideModal(list){
+  const names = list.slice(0, 5).map(c => escapeHtml(c.title)).join('、') + (list.length > 5 ? ' 等' : '');
+  $('collideText').innerHTML = `本机已有 <b>${list.length}</b> 个同名对话：${names}<br>要用文件里的内容<b>替换</b>它们，还是<b>保留两份</b>（新导入的会加「（导入2）」后缀）？`;
+  $('collideOver').textContent = `覆盖同名（${list.length} 个）`;
+  $('collideModal').classList.add('show');
+}
+
+function applyImport(mode){
+  const P = window.__pendingImport;
+  if(!P){ return; }
+  window.__pendingImport = null;
+  const incoming = P.incoming, single = P.single;
+  let firstId = null, replaced = 0, added = 0;
+
+  for(const c of incoming){
+    let id = null;
+    if(mode === 'over'){
+      const hit = Object.keys(state.conversations).find(k => (state.conversations[k].title || '新对话') === c.title);
+      if(hit) id = hit;
+    }
+    if(id){
+      // 覆盖：沿用原 id，内容和消息换成本文件里的
+      const cur = state.conversations[id];
+      cur.messages = c.messages;
+      cur.snapshots = c.snapshots || [];
+      cur.updatedAt = c.updatedAt || Date.now();
+      cur.renamed = c.renamed;
+      replaced++;
+    }else{
+      let title = c.title;
+      const names = Object.keys(state.conversations).map(k => state.conversations[k].title || '新对话');
+      if(names.includes(title)){
+        let n = 2;
+        while(names.includes(`${title}（导入${n}）`)) n++;
+        title = `${title}（导入${n}）`;
+      }
+      id = newConvId();
+      state.conversations[id] = { title, renamed: c.renamed, messages: c.messages, snapshots: c.snapshots, updatedAt: c.updatedAt };
+      added++;
+    }
+    if(!firstId) firstId = id;
+  }
+
+  state.currentId = firstId;
   messages = state.conversations[state.currentId].messages;
   persist();
   recalcTotals();
   renderAll();
   renderConvList();
   closeBackup();
-  alert(`已恢复 ${ids.length} 个会话`);
+  const msg = mode === 'over' && replaced && !added
+    ? `已覆盖 ${replaced} 个同名对话（内容已替换为文件里的版本）`
+    : (replaced
+        ? `已覆盖 ${replaced} 个同名对话，新建 ${added} 个`
+        : (single ? `已加入对话「${state.conversations[firstId].title}」` : `已加入 ${added} 个会话，原有会话都还在`));
+  setTimeout(()=> alert(msg), 30);
 }
 
 // ---------- 同一条消息的多版本（‹ 1/2 ›） ----------
@@ -1571,6 +1772,7 @@ function renderAll(){
     messages.forEach((m, i)=>renderMsg(m, i));
   }
   renderStats();
+  renderNav();
 }
 
 // ---------- 费用 ----------
@@ -1581,6 +1783,80 @@ function calcCost(usage, cfg){
   const reasoning = usage.completion_tokens_details?.reasoning_tokens || 0;
   const cost = (miss/1e6)*cfg.priceIn + (hit/1e6)*cfg.priceCache + (completion/1e6)*cfg.priceOut;
   return { prompt:usage.prompt_tokens||0, hit, miss, completion, reasoning, cost };
+}
+
+// ---------- 对话导航 ----------
+function navPlain(m){
+  const t = m.content || '';
+  return t.replace(/```[\s\S]*?```/g, ' ').replace(/[#>*`|_-]/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+function renderNav(){
+  const box = $('navList');
+  if(!box) return;
+  box.innerHTML = '';
+  const qs = messages.map((m, i)=>({ m, i })).filter(o => o.m.role === 'user');
+  if(!qs.length){
+    const p = document.createElement('p');
+    p.className = 'note';
+    p.style.padding = '10px';
+    p.textContent = messages.length ? '这个对话里只有回复，还没有提问。' : '这个对话还没有消息。';
+    box.appendChild(p);
+    return;
+  }
+  qs.forEach((o, n)=>{
+    const it = document.createElement('div');
+    it.className = 'nav-item';
+    it.dataset.mi = String(o.i);
+    const idx = document.createElement('span');
+    idx.className = 'nav-idx';
+    idx.textContent = String(n + 1);
+    const tx = document.createElement('span');
+    tx.className = 'nav-text';
+    const t = navPlain(o.m);
+    tx.textContent = t ? (t.length > 60 ? t.slice(0, 60) + '…' : t) : '（空提问）';
+    it.appendChild(idx); it.appendChild(tx);
+    it.onclick = ()=> gotoMsg(o.i);
+    box.appendChild(it);
+  });
+  markNavActive();
+}
+
+let navTick = 0;
+function markNavActive(){
+  const pane = $('navPane');
+  if(!pane || !pane.classList.contains('open')) return;
+  const chat = $('chat');
+  const top = chat.getBoundingClientRect().top + 8;
+  let best = null;
+  chat.querySelectorAll('.msg.user').forEach(el=>{
+    const r = el.getBoundingClientRect();
+    if(r.top <= top) best = el;
+  });
+  best = best || chat.querySelector('.msg.user');
+  if(!best) return;
+  const mi = best.dataset.mi;
+  $('navList').querySelectorAll('.nav-item').forEach(it=>{
+    it.classList.toggle('active', it.dataset.mi === mi);
+  });
+  const act = $('navList').querySelector('.nav-item.active');
+  if(act && act.scrollIntoView) act.scrollIntoView({ block:'nearest' });
+}
+
+function openNav(){ $('navPane').classList.add('open'); $('mask').classList.add('show'); renderNav(); }
+function closeNav(){ $('navPane').classList.remove('open'); }
+function gotoMsg(i){
+  const el = $('chat').querySelector(`.msg[data-mi="${i}"]`);
+  if(!el) return;
+  el.scrollIntoView({ block:'start', behavior:'smooth' });
+  el.classList.add('flash');
+  setTimeout(()=> el.classList.remove('flash'), 1300);
+  closeNav();
+  $('mask').classList.remove('show');
+}
+function navToEdge(where){
+  const chat = $('chat');
+  chat.scrollTo({ top: where === 'top' ? 0 : chat.scrollHeight, behavior:'smooth' });
 }
 
 // ---------- 发送 ----------
@@ -1924,13 +2200,30 @@ function exportMd(){
       md += `> ⚠️ 已关闭思考但模型仍返回思维链，关闭参数未被遵守，思考 token 仍按输出计费。\n\n`;
     }
   }
-  const blob = new Blob([md], { type:'text/markdown;charset=utf-8' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = (currentConv().title || '对话记录').slice(0,20) + '_' + new Date().toISOString().slice(0,10) + '.md';
-  a.click();
-  URL.revokeObjectURL(a.href);
+  const name = (currentConv().title || '对话记录').slice(0,20) + '_' + new Date().toISOString().slice(0,10) + '.md';
+  if(!appSaveText(name, md, 'text/markdown')) alert('导出失败，请改用「复制 JSON」。');
 }
+function exportTxt(){
+  if(!messages.length){ alert('当前对话暂无内容'); return; }
+  const title = currentConv().title || '对话记录';
+  let txt = `对话：${title}\n${new Date().toISOString().slice(0,10)}\n\n`;
+  for(const m of messages){
+    const who = m.role === 'user' ? '我' : m.role === 'system' ? '系统' : '助手';
+    const body = (m.content || '').trim();
+    if(!body) continue;
+    txt += `${who}：\n${body}\n\n`;
+  }
+  const safe = title.replace(/[\\/:*?"<>|]/g, '_').slice(0, 20);
+  const name = `${safe}_${new Date().toISOString().slice(0,10)}.txt`;
+  if(!appSaveText(name, txt.replace(/\n{3,}/g, '\n\n'), 'text/plain')) alert('导出失败，请改用「复制 JSON」。');
+}
+
+function openExportModal(){
+  if(!messages.length){ alert('当前对话暂无内容'); return; }
+  $('exportModal').classList.add('show');
+}
+function closeExportModal(){ $('exportModal').classList.remove('show'); }
+
 function clearChat(){
   if(!messages.length){ return; }
   if(!confirm('确定清空当前对话的全部消息？配置会保留。')) return;
@@ -1953,11 +2246,11 @@ function setSheet(open, remember){
     try{ localStorage.setItem(LS_SHEET, open ? '1' : '0'); }catch(e){}
   }
 }
-function closeDrawers(){ setSheet(false, true); if(typeof closeConvDrawer === 'function') closeConvDrawer(); }
+function closeDrawers(){ setSheet(false, true); if(typeof closeConvDrawer === 'function') closeConvDrawer(); if(typeof closeNav === 'function') closeNav(); }
 function openSheet(){ setSheet(true, true); }
 $('panelBtn').onclick = ()=>{ setSheet(!$('sheet').classList.contains('open'), true); };
 $('sheetClose').onclick = ()=> setSheet(false, true);
-$('mask').onclick = ()=>{ setSheet(false, true); if(typeof closeConvDrawer === 'function') closeConvDrawer(); };
+$('mask').onclick = ()=>{ setSheet(false, true); if(typeof closeConvDrawer === 'function') closeConvDrawer(); if(typeof closeNav === 'function') closeNav(); };
 // 方案 B：输入框获得焦点（键盘弹起）自动收起设置面板（不覆盖记忆状态）
 $('input').addEventListener('focus', ()=>{ setSheet(false, false); if(typeof closeConvDrawer === 'function') closeConvDrawer(); });
 
@@ -1978,9 +2271,42 @@ if(IS_APP){
   $('convDrawerFoot').onclick = ()=>{ closeConvDrawer(); $('mask').classList.remove('show'); setSheet(true, true); };
   $('convDrawerClose').onclick = ()=>{ closeConvDrawer(); $('mask').classList.remove('show'); };
 }else{
+  document.body.classList.add('web');
   $('brandAvatar').onclick = null;
   $('convDrawerFoot').style.display = 'none';
   $('convDrawerSettings').style.display = 'none';
+}
+// 统一出入口：App 内走 JS 桥（系统另存为 / 剪贴板），网页走 blob 下载 + clipboard
+function appSaveText(name, text, mime){
+  if(IS_APP && typeof dsShell !== 'undefined' && dsShell.saveText){
+    try{ if(dsShell.saveText(name, text, mime || 'text/plain')) return true; }catch(e){}
+  }
+  try{
+    const blob = new Blob([text], { type:(mime || 'text/plain') + ';charset=utf-8' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = name;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>{ try{ URL.revokeObjectURL(a.href); }catch(e){} }, 3000);
+    return true;
+  }catch(e){ return false; }
+}
+function appCopyText(text, done, fail){
+  if(IS_APP && typeof dsShell !== 'undefined' && dsShell.copyText){
+    try{ if(dsShell.copyText(text)){ done && done(); return; } }catch(e){}
+  }
+  const fallback = ()=>{
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.style.position='fixed'; ta.style.top='-1000px'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.focus(); ta.select();
+    let ok = false;
+    try{ ok = document.execCommand('copy'); }catch(err){}
+    ta.remove();
+    ok ? (done && done()) : (fail && fail());
+  };
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(()=> done && done()).catch(fallback);
+  }else{ fallback(); }
 }
 // 折叠分组：按小标题把设置面板切块，默认只展开第一组
 function buildAccordion(){
@@ -2042,7 +2368,10 @@ $('sendBtn').onclick = send;
 $('input').addEventListener('keydown', e=>{
   if(e.key === 'Enter' && (e.ctrlKey || e.metaKey)){ e.preventDefault(); send(); }
 });
-$('exportBtn').onclick = exportMd;
+$('exportBtn').onclick = openExportModal;
+$('exportMdBtn').onclick = ()=>{ closeExportModal(); exportMd(); };
+$('exportTxtBtn').onclick = ()=>{ closeExportModal(); exportTxt(); };
+$('exportCancel').onclick = closeExportModal;
 $('clearBtn').onclick = clearChat;
 $('newChatBtn').onclick = newConv;
 $('importBtn').onclick = openImport;
@@ -2056,6 +2385,20 @@ $('backupBtn').onclick = ()=>{ closeDrawers(); openBackup(); };
 $('restoreBtn').onclick = ()=>{ closeDrawers(); $('restoreFile').value=''; $('restoreFile').click(); };
 $('backupCancel').onclick = closeBackup;
 $('backupDownload').onclick = backupDownload;
+$('expCurBtn').onclick = ()=> exportConv(state.currentId);
+$('navBtn').onclick = ()=> openNav();
+$('navClose').onclick = ()=>{ closeNav(); $('mask').classList.remove('show'); };
+$('navTop').onclick = ()=> navToEdge('top');
+$('navBottom').onclick = ()=> navToEdge('bottom');
+$('chat').addEventListener('scroll', ()=>{
+  const now = Date.now();
+  if(now - navTick < 120) return;
+  navTick = now;
+  markNavActive();
+});
+$('collideOver').onclick = ()=>{ $('collideModal').classList.remove('show'); applyImport('over'); };
+$('collideNew').onclick = ()=>{ $('collideModal').classList.remove('show'); applyImport('new'); };
+$('collideCancel').onclick = ()=>{ $('collideModal').classList.remove('show'); window.__pendingImport = null; };
 $('backupCopy').onclick = backupCopy;
 $('restorePick').onclick = ()=>{ $('restoreFile').value=''; $('restoreFile').click(); };
 $('restoreFile').onchange = e=>{ const f = e.target.files && e.target.files[0]; if(f) doRestore(f); };
@@ -2191,17 +2534,8 @@ $('chat').addEventListener('click', e => {
   const code = pre ? pre.querySelector('code') : null;
   const text = code ? code.textContent : '';
   const done = () => { btn.textContent = '已复制'; setTimeout(()=>btn.textContent='复制', 1200); };
-  if(navigator.clipboard && navigator.clipboard.writeText){
-    navigator.clipboard.writeText(text).then(done).catch(()=>{
-      const ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select();
-      try{ document.execCommand('copy'); done(); }catch(err){ btn.textContent='复制失败'; }
-      ta.remove();
-    });
-  }else{
-    const ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select();
-    try{ document.execCommand('copy'); done(); }catch(err){ btn.textContent='复制失败'; }
-    ta.remove();
-  }
+  const fail = () => { btn.textContent = '复制失败'; setTimeout(()=>btn.textContent='复制', 1200); };
+  appCopyText(text, done, fail);
 });
 $('mdOn').addEventListener('change', ()=>{ __mdCache = null; saveCfg(); renderAll(); });
 
